@@ -7,9 +7,9 @@ var questionNumber = 0;
 //timer
 var timerValue = 30
 //variablse to be used after the answer is submitted
-var correctGuesses;
+var correctGuesses = 0;
 
-var incorrectGuesses;
+var incorrectGuesses = 0;
 
 var question0 = createQuestionObj("Who was the king before Robert Baratheon?", ["Aerys Targaryen", "Jaehaerys II Targaryen", "Joffrey Lannister", "Aegon I Targaryen"], 0)
 
@@ -43,7 +43,7 @@ function count() {
 	$(".timer").html(timerValue)
 	
 	if (timerValue === 25) {
-		
+		whichRadioChecked()
 		currentQuestion ++
 		
 		$("form").empty()
@@ -64,7 +64,7 @@ function createQuestionObj(questionString, guessArr, correctGuessIndex) {
 		 //options for the quesiton
 		 options: guessArr,
 		 //sets the value for correct guess based of a passed in value, correctGuessIndex which refers back to the guessArr
-		 correctGuess: guessArr[correctGuessIndex]
+		 correctIndex: correctGuessIndex
 	}
 	//updates the question number
 	questionNumber ++ 
@@ -82,6 +82,20 @@ function updatePage(question) {
 		$("form").append("<input type='radio' name='option' value='" + i + "' class='" + optionNumber + "'>" + question.options[i] + "<br>")	
 	}
 } 
+
+function whichRadioChecked() {
+	//sets the correctAnswer to the current question's correct index number + the string 'optionNumber' so it looks like optionNumber1
+
+	var correctAnswer = "." + questionArray[currentQuestion].correctIndex
+	console.log("whichRadioChecked triggered " + correctAnswer)
+	//checks to see if optionNumber1
+	if ($(correctAnswer).prop("checked")) {
+		$(".result").html("You guessed correctly!")
+	}
+	else {
+		$(".result").html("You guessed poorly!")
+	}
+}
 //basically this is how you can create a quesiton object
 
 startTimer()
