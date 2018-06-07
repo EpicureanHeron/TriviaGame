@@ -26,17 +26,19 @@ function count() {
 }
 
 //Creates and returns objects that are questions
-function createQuestionObj(objectName, questionString, guessArr) {
+function createQuestionObj(objectName, questionString, guessArr, correctGuessIndex) {
 	
-	questionNumber ++ 
+	
 	
 	newObject = {
 		 name: objectName,
+		 //questionNumber is a global variable
 		 number: questionNumber,
 		 mainQuestion: questionString,
-		 options: guessArr
+		 options: guessArr,
+		 correctGuess: guessArr[correctGuessIndex]
 	}
-	
+	questionNumber ++ 
 	return newObject
 
 }
@@ -45,6 +47,8 @@ function createQuestionObj(objectName, questionString, guessArr) {
 
 
 
-var newQuestion = createQuestionObj("Testing", "How many poots does a pooter poot?", ["1: hey hey", "2: My My"])
+var newQuestion = createQuestionObj("Testing", "How many poots does a pooter poot?", ["1: hey hey", "2: My My"], 0)
 
-var newQuestion2 = createQuestionObj("basterman!", "I Don't know!", ["this is an array", "Baddass", "monster"])
+var newQuestion2 = createQuestionObj("basterman!", "I Don't know!", ["this is an array", "Baddass", "monster"], 1)
+
+console.log(newQuestion2.correctGuess)
