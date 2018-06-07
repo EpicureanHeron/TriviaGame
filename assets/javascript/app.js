@@ -11,19 +11,50 @@ var correctGuesses;
 
 var incorrectGuesses;
 
+var question0 = createQuestionObj("Who was the king before Robert Baratheon?", ["Aerys Targaryen", "Jaehaerys II Targaryen", "Joffrey Lannister", "Aegon I Targaryen"], 0)
+
+var question1 = createQuestionObj("Which of the following names is NOT one of the Stark children's direwolve? ", ["Ghost", "Spring", "Lady", "Grey Wind"], 1)
+
+//https://awoiaf.westeros.org/index.php/Free_Cities
+var question2 = createQuestionObj("Which of the following is NOT a free city of Essos ", ["Qohor", "Myr", "Lantum", "Lys"], 2)
+
+//http://gameofthrones.wikia.com/wiki/Assassination_of_Jon_Arryn
+var question3 = createQuestionObj("Who killed Jon Arryn?", ["Peter 'Littlefinger' Baelish", "Varys", "Ceresi Lannister", "Lysa Arryn"], 3)
+
+var question4 = createQuestionObj("Which character has never been a eunuch?", ["Theon Greyjoy", "Varys", "Grey Worm", "Tyrion Lannister"], 3)
+
+
+var questionArray = [question0, question1, question2, question3, question4]
+
+var currentQuestion = 0
+
+
+
 //starts the timer which calls the count function 
 function startTimer() {
 	//probably should set this to a variable so that I can refer back to it and reset it ? 
-    setInterval(count, 1000); 
+    setInterval(count, 1000);
+	updatePage(question0)
   }
   
 function count() {
 	//counts down and updates the screen
 	timerValue = timerValue-1
 	$(".timer").html(timerValue)
+	
+	if (timerValue === 25) {
+		
+		currentQuestion ++
+		
+		$("form").empty()
+		timerValue = 30;
+		updatePage(questionArray[currentQuestion])
+	}
 }
 
 //Creates and returns objects that are questions
+
+
 function createQuestionObj(questionString, guessArr, correctGuessIndex) {	
 	newObject = {
 		 //questionNumber is a global variable
@@ -46,16 +77,13 @@ function updatePage(question) {
 	$(".question").html(question.mainQuestion)
 	//displays all options
 	for (i = 0; i < question.options.length; i ++) {		
-		var classToUpdate = ".option" + i	
-		var optionNumber = i + 1
-		$(classToUpdate).html(optionNumber + ": " + question.options[i])	
+		//updates the optionNumber
+		var optionNumber = i 
+		$("form").append("<input type='radio' name='option' value='" + i + "' class='" + optionNumber + "'>" + question.options[i] + "<br>")	
 	}
 } 
 //basically this is how you can create a quesiton object
-var newQuestion = createQuestionObj("How many poots does a pooter poot?", ["hey hey", "My My"], 0)
-
-var newQuestion2 = createQuestionObj("I Don't know!", ["this is an array", "Baddass", "monster"], 1)
 
 startTimer()
 
-updatePage(newQuestion2)
+
